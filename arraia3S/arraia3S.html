@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      position: relative;
+    }
+
+    img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; 
+      display: block;
+    }
+
+    #pauseBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      z-index: 10;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="pauseBtn">⏸ Pausar</button>
+  <img id="slideshow" src="" alt="Slideshow" />
+
+  <script>
+    const imagens = [];
+    for (let i = 1; i <= 76; i++) {
+      imagens.push(`images/${i}.png`);
+    }
+
+    let index = 0;
+    let paused = false;
+    let intervalo;
+
+    const imagem = document.getElementById('slideshow');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    function mostrarProximaImagem() {
+      if (index >= imagens.length) index = 0;
+      imagem.src = imagens[index++];
+    }
+
+    function iniciarSlideshow() {
+      mostrarProximaImagem(); 
+      intervalo = setInterval(() => {
+        if (!paused) {
+          mostrarProximaImagem();
+        }
+      }, 60000);
+    }
+
+    pauseBtn.addEventListener('click', () => {
+      paused = !paused;
+      pauseBtn.textContent = paused ? "▶ Continuar" : "⏸ Pausar";
+    });
+
+    iniciarSlideshow();
+  </script>
+</body>
+</html>
